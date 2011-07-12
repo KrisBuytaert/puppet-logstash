@@ -1,0 +1,10 @@
+#!/bin/bash
+
+. /etc/init.d/functions
+
+cd /usr/local/logstash
+
+daemon java -jar logstash.jar agent -f /etc/logstash/simple.conf  -- web --backend elasticsearch:///?local  < /dev/null > /var/log/logstash/logstash.log 2>&1 
+
+
+
