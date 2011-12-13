@@ -40,3 +40,11 @@ class logstash::simple {
 #	}
 
 }
+
+
+
+class logstash::server {
+
+	include elasticsearch
+
+}
