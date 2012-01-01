@@ -33,35 +33,6 @@ class logstash {
 
 
 
-class logstash::simple { 
-
-
-  file {
-    "/usr/local/logstash/logstash.jar":
-      ensure  => "file",
-      source  => "puppet:///modules/logstash/logstash-1.0.14-monolithic.jar",
-      require => File['/usr/local/logstash'];
-    "/etc/logstash/simple.conf":
-      ensure  => "file",
-      source  => "puppet:///modules/logstash/simple.conf",
-      require => File['/etc/logstash'];
-    "/etc/init.d/logstash-simple":
-      ensure  => "file", 
-      mode    => 0744,
-      source  => "puppet:///modules/logstash/logstash-simple",
-      require => [ File['/usr/local/logstash/logstash.jar'], File['/var/log/logstash/'] ],
-  }
-
-#	service { 'logstash-simple':
-#			ensure => 'running',
-#			enable => true,
-#			hasrestart => true,
-#			hasstatus => true,
-#			require => [ File['/etc/logstash/simple.conf'], File['/etc/init.d/logstash-simple'] ]
-#	}
-
-}
-
 
 
 class logstash::shipper {
@@ -74,6 +45,34 @@ class logstash::shipper {
       owner   => '0',
       source  => "puppet:///modules/logstash/shipper.conf";
   }
+
+
+  
+  file {
+    '/etc/rc.d/init.d/logstash-shipper':
+      ensure => 'file',
+      group  => '0',
+      mode   => '755',
+      owner  => '0',
+      source => 'puppet:///modules/logstash/logstash-shipper' ;
+  }
+
+
+
+
+  file {
+    '/usr/local/logstash/conf/shipper-wrapper.conf':
+      ensure   => 'file',
+      group    => '0',
+      mode     => '644',
+      owner    => '0',
+      source   => 'puppet:///modules/logstash/shipper-wrapper.conf';
+    }
+
+service { 'logstash-shipper':
+  ensure   => 'running',
+  enable => 'true',
+}
 
 
 
@@ -91,11 +90,67 @@ class logstash::server {
       owner   => '0',
       source  => "puppet:///modules/logstash/indexer.conf";
   }
+
+
+ file {
+    '/etc/rc.d/init.d/logstash-server':
+      ensure => 'file',
+      group  => '0',
+      mode   => '755',
+      owner  => '0',
+      source => 'puppet:///modules/logstash/logstash-server' ;
+  }
+
+
+
+
+  file {
+    '/usr/local/logstash/conf/server-wrapper.conf':
+      ensure   => 'file',
+      group    => '0',
+      mode     => '644',
+      owner    => '0',
+      source   => 'puppet:///modules/logstash/server-wrapper.conf';
+    }
+
+    service { 'logstash-server':
+      ensure   => 'running',
+      enable => 'true',
+    }
+
+
+
 }
 
 class logstash::web {
 
-  # Most probably only the rc script goes inhere .. 
+
+ file {
+    '/etc/rc.d/init.d/logstash-web':
+      ensure => 'file',
+      group  => '0',
+      mode   => '755',
+      owner  => '0',
+      source => 'puppet:///modules/logstash/logstash-web' ;
+  }
+
+
+
+
+  file {
+    '/usr/local/logstash/conf/web-wrapper.conf':
+      ensure   => 'file',
+      group    => '0',
+      mode     => '644',
+      owner    => '0',
+      source   => 'puppet:///modules/logstash/web-wrapper.conf';
+    }
+
+
+  service { 'logstash-web':
+      ensure   => 'running',
+      enable => 'true',
+}
 
 
 
