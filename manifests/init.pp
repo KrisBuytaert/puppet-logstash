@@ -6,6 +6,14 @@ class logstash::common {
       ensure   => "directory";
     "/etc/logstash/":
       ensure   => "directory";
+    "/usr/local/logstash/bin/":
+      ensure   => "directory";
+    "/usr/local/logstash/lib/":
+      ensure   => "directory";
+    "/usr/local/logstash/conf":
+      ensure   => "directory";
+    "/usr/local/logstash/logs":
+      ensure   => "directory";
     "/var/log/logstash/":
       ensure   => "directory",
       recurse  => true;
