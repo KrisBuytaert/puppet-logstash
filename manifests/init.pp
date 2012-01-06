@@ -70,8 +70,9 @@ class logstash::shipper {
     }
 
 service { 'logstash-shipper':
-  ensure   => 'running',
-  enable => 'true',
+  ensure    => 'running',
+  hasstatus => 'true',
+  enable    => 'true',
 }
 
 
@@ -113,10 +114,11 @@ class logstash::server {
       source   => 'puppet:///modules/logstash/server-wrapper.conf';
     }
 
-    service { 'logstash-server':
-      ensure   => 'running',
-      enable => 'true',
-    }
+service { 'logstash-server':
+  ensure    => 'running',
+  hasstatus => 'true',
+  enable    => 'true',
+}
 
 
 
@@ -147,9 +149,10 @@ class logstash::web {
     }
 
 
-  service { 'logstash-web':
-      ensure   => 'running',
-      enable => 'true',
+service { 'logstash-web':
+  ensure    => 'running',
+  hasstatus => 'true',
+  enable    => 'true',
 }
 
 
