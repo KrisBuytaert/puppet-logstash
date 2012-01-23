@@ -76,6 +76,17 @@ service { 'logstash-shipper':
 }
 
 
+  
+
+file { '/etc/logrotate.d/syslog':
+  ensure   => 'file',
+  group    => '0',
+  mode     => '644',
+  owner    => '0',
+  source   => 'puppet:///modules/logstash/syslog.logrotate';
+}
+
+
 
 }
 
