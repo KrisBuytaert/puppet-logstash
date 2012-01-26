@@ -1,0 +1,19 @@
+input {
+  file {
+    type => "syslog"
+    # Wildcards work here :)
+    path => [ <%= logfiles %> ]
+  }
+}
+
+output {
+  # Output events to stdout for debugging. Feel free to remove
+  # this output if you don't need it.
+  stdout { }
+  # Ship events to the amqp fanout queue named 'rawlogs"
+  amqp {
+    host          => "<%= logstash_server %>"
+    exchange_type => "fanout"
+    name          => "rawlogs"
+    }
+}
