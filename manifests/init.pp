@@ -35,7 +35,9 @@ class logstash {
 
 
 
-class logstash::shipper {
+class logstash::shipper ($logstash_server ='localhost',
+                         $logfiles = '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"' )
+{
 
   file { 
     '/etc/logstash/shipper.conf':
@@ -43,7 +45,7 @@ class logstash::shipper {
       group   => '0',
       mode    => '644',
       owner   => '0',
-      source  => "puppet:///modules/logstash/shipper.conf";
+      content => template("logstash/shipper.conf.erb"),
   }
 
 
