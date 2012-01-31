@@ -35,8 +35,11 @@ class logstash {
 
 
 
-class logstash::shipper ($logstash_server ='localhost',
-$logfiles = '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"' )
+class logstash::shipper (
+  $logstash_server ='localhost',
+  $logfiles = '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"',
+  $debug = 'no'
+)
 {
 
   file {
@@ -67,7 +70,7 @@ $logfiles = '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"' )
       group    => '0',
       mode     => '644',
       owner    => '0',
-      source   => 'puppet:///modules/logstash/shipper-wrapper.conf';
+      content => template("logstash/shipper-wrapper.conf.erb");
   }
 
   service { 'logstash-shipper':
@@ -91,8 +94,10 @@ $logfiles = '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"' )
 }
 
 
-class logstash::server {
-
+class logstash::server(
+  $debug = 'no'
+)
+{
 
   file {
     '/etc/logstash/indexer.conf':
@@ -121,7 +126,7 @@ class logstash::server {
       group    => '0',
       mode     => '644',
       owner    => '0',
-      source   => 'puppet:///modules/logstash/server-wrapper.conf';
+      content => template("logstash/server-wrapper.conf.erb");
   }
 
   service { 'logstash-server':
