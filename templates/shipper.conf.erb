@@ -1,22 +1,28 @@
 input {
   file {
     type => "syslog"
-
     # Wildcards work here :)
-    path => [ "/var/log/messages", "/var/log/syslog", "/var/log/*.log" ]
+    path => [ <%= logfiles %> ]
   }
-
 }
+
+filter {
+  multiline {
+    type => "syslog"
+    pattern => "^\t"
+    what => "previous"
+  }
+}
+
 
 output {
   # Output events to stdout for debugging. Feel free to remove
   # this output if you don't need it.
   stdout { }
-
   # Ship events to the amqp fanout queue named 'rawlogs"
   amqp {
-    host => "localhost"
+    host          => "<%= logstash_server %>"
     exchange_type => "fanout"
-    name => "rawlogs"
-  }
+    name          => "rawlogs"
+    }
 }
