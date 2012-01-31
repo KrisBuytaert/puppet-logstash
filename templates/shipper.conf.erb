@@ -6,6 +6,15 @@ input {
   }
 }
 
+filter {
+  multiline {
+    type => "syslog"
+    pattern => "^\t"
+    what => "previous"
+  }
+}
+
+
 output {
   # Output events to stdout for debugging. Feel free to remove
   # this output if you don't need it.

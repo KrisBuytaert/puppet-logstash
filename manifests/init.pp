@@ -36,10 +36,10 @@ class logstash {
 
 
 class logstash::shipper ($logstash_server ='localhost',
-                         $logfiles = '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"' )
+$logfiles = '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"' )
 {
 
-  file { 
+  file {
     '/etc/logstash/shipper.conf':
       ensure  => 'file',
       group   => '0',
@@ -49,7 +49,6 @@ class logstash::shipper ($logstash_server ='localhost',
   }
 
 
-  
   file {
     '/etc/rc.d/init.d/logstash-shipper':
       ensure => 'file',
@@ -69,24 +68,23 @@ class logstash::shipper ($logstash_server ='localhost',
       mode     => '644',
       owner    => '0',
       source   => 'puppet:///modules/logstash/shipper-wrapper.conf';
-    }
+  }
 
-service { 'logstash-shipper':
-  ensure    => 'running',
-  hasstatus => 'true',
-  enable    => 'true',
-}
+  service { 'logstash-shipper':
+    ensure    => 'running',
+    hasstatus => 'true',
+    enable    => 'true',
+  }
 
 
-  
 
-file { '/etc/logrotate.d/syslog':
-  ensure   => 'file',
-  group    => '0',
-  mode     => '644',
-  owner    => '0',
-  source   => 'puppet:///modules/logstash/syslog.logrotate';
-}
+  file { '/etc/logrotate.d/syslog':
+    ensure   => 'file',
+    group    => '0',
+    mode     => '644',
+    owner    => '0',
+    source   => 'puppet:///modules/logstash/syslog.logrotate';
+  }
 
 
 
@@ -96,7 +94,7 @@ file { '/etc/logrotate.d/syslog':
 class logstash::server {
 
 
-  file { 
+  file {
     '/etc/logstash/indexer.conf':
       ensure  => 'file',
       group   => '0',
@@ -105,8 +103,7 @@ class logstash::server {
       source  => "puppet:///modules/logstash/indexer.conf";
   }
 
-
- file {
+  file {
     '/etc/rc.d/init.d/logstash-server':
       ensure => 'file',
       group  => '0',
@@ -125,13 +122,13 @@ class logstash::server {
       mode     => '644',
       owner    => '0',
       source   => 'puppet:///modules/logstash/server-wrapper.conf';
-    }
+  }
 
-service { 'logstash-server':
-  ensure    => 'running',
-  hasstatus => 'true',
-  enable    => 'true',
-}
+  service { 'logstash-server':
+    ensure    => 'running',
+    hasstatus => 'true',
+    enable    => 'true',
+  }
 
 
 
@@ -140,7 +137,7 @@ service { 'logstash-server':
 class logstash::web {
 
 
- file {
+  file {
     '/etc/rc.d/init.d/logstash-web':
       ensure => 'file',
       group  => '0',
@@ -159,14 +156,14 @@ class logstash::web {
       mode     => '644',
       owner    => '0',
       source   => 'puppet:///modules/logstash/web-wrapper.conf';
-    }
+  }
 
 
-service { 'logstash-web':
-  ensure    => 'running',
-  hasstatus => 'true',
-  enable    => 'true',
-}
+  service { 'logstash-web':
+    ensure    => 'running',
+    hasstatus => 'true',
+    enable    => 'true',
+  }
 
 
 
