@@ -37,8 +37,9 @@ class logstash {
 
 class logstash::shipper (
   $logstash_server ='localhost',
-  $logfiles = '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"',
-  $debug = 'no'
+  $verbose = 'no',
+  $jarname ='logstash-1.1.0-monolithic.jar',
+  $logfiles = '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"'
 )
 {
 
@@ -95,7 +96,8 @@ class logstash::shipper (
 
 
 class logstash::server(
-  $debug = 'no'
+  $verbose = 'no',
+  $jarname ='logstash-1.1.0-monolithic.jar'
 )
 {
 
@@ -139,7 +141,7 @@ class logstash::server(
 
 }
 
-class logstash::web {
+class logstash::web ($jarname ='logstash-1.1.0-monolithic.jar') {
 
 
   file {
@@ -160,7 +162,7 @@ class logstash::web {
       group    => '0',
       mode     => '644',
       owner    => '0',
-      source   => 'puppet:///modules/logstash/web-wrapper.conf';
+      content => template("logstash/web-wrapper.conf.erb");
   }
 
 
