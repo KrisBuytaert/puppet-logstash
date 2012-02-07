@@ -14,7 +14,7 @@ wrapper.java.mainclass=org.tanukisoftware.wrapper.WrapperJarApp
 # Java Classpath (include wrapper.jar)  Add class path elements as
 #  needed starting from 1
 wrapper.java.classpath.1=/usr/share/java/tanukiwrapper.jar
-wrapper.java.classpath.2=/usr/local/logstash/lib/logstash-1.0.17-monolithic.jar
+wrapper.java.classpath.2=/usr/local/logstash/lib/<%= jarname %>
 
 
 # Java Library Path (location of Wrapper.DLL or libwrapper.so)
@@ -30,11 +30,11 @@ wrapper.java.library.path.1=/usr/lib64
 #wrapper.java.maxmemory=64
 
 # Application parameters.  Add parameters as needed starting from 1
-wrapper.app.parameter.1=/usr/local/logstash/lib/logstash-1.0.17-monolithic.jar
+wrapper.app.parameter.1=/usr/local/logstash/lib/<%= jarname %> 
 wrapper.app.parameter.2=agent
 wrapper.app.parameter.3=-f
-wrapper.app.parameter.4=/etc/logstash/shipper.conf 
-<% if debug == 'yes' %>
+wrapper.app.parameter.4=/etc/logstash/shipper.conf
+<% if verbose == 'yes' %>
 wrapper.app.parameter.5=-vvvvv
 <% end %>
 

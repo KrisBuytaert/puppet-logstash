@@ -16,6 +16,7 @@ wrapper.java.mainclass=org.tanukisoftware.wrapper.WrapperJarApp
 wrapper.java.classpath.1=/usr/share/java/tanukiwrapper.jar
 wrapper.java.classpath.2=/usr/local/logstash/lib/<%= jarname %>
 
+
 # Java Library Path (location of Wrapper.DLL or libwrapper.so)
 wrapper.java.library.path.1=/usr/lib64
 
@@ -30,12 +31,11 @@ wrapper.java.library.path.1=/usr/lib64
 
 # Application parameters.  Add parameters as needed starting from 1
 wrapper.app.parameter.1=/usr/local/logstash/lib/<%= jarname %>
-wrapper.app.parameter.2=agent
-wrapper.app.parameter.3=-f
-wrapper.app.parameter.4=/etc/logstash/indexer.conf 
-<% if verbose == 'yes' %> 
-wrapper.app.parameter.5=-vvvvv
-<% end %>
+wrapper.app.parameter.2=web
+wrapper.app.parameter.3=--backend 
+wrapper.app.parameter.4=elasticsearch://127.0.0.1:9300/
+# Differentiate between single instance vs cluster connect .. 
+#wrapper.app.parameter.4=elasticsearch:///elasticsearch/
 
 
 #********************************************************************
@@ -48,7 +48,7 @@ wrapper.console.format=PM
 wrapper.console.loglevel=INFO
 
 # Log file to use for wrapper output logging.
-wrapper.logfile=/var/log/logstash/server-wrapper.log
+wrapper.logfile=/var/log/logstash/web-wrapper.log
 
 # Format of output for the log file.  (See docs for formats)
 wrapper.logfile.format=LPTM
