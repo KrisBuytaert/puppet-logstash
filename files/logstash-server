@@ -13,7 +13,7 @@
 #APP_NAME="@app.name@"
 APP_NAME="LogstashServer"
 #APP_LONG_NAME="@app.long.name@"
-APP_LONG_NAME="Logstash Serverr Instance"
+APP_LONG_NAME="Logstash Server Instance"
 
 # Wrapper
 WRAPPER_CMD="/usr/sbin/tanukiwrapper"
