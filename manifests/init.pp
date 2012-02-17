@@ -2,28 +2,29 @@
 class logstash::common {
 
   file {
-    "/usr/local/logstash/":
-      ensure   => "directory";
-    "/etc/logstash/":
-      ensure   => "directory";
-    "/usr/local/logstash/bin/":
-      ensure   => "directory";
-    "/usr/local/logstash/lib/":
-      ensure   => "directory";
-    "/usr/local/logstash/conf":
-      ensure   => "directory";
-    "/usr/local/logstash/logs":
-      ensure   => "directory";
-    "/var/log/logstash/":
-      ensure   => "directory",
+    '/usr/local/logstash/':
+      ensure   => 'directory';
+    '/etc/logstash/':
+      ensure   => 'directory';
+    '/usr/local/logstash/bin/':
+      ensure   => 'directory';
+    '/usr/local/logstash/lib/':
+      ensure   => 'directory';
+    '/usr/local/logstash/conf':
+      ensure   => 'directory';
+    '/usr/local/logstash/logs':
+      ensure   => 'directory';
+    '/var/log/logstash/':
+      ensure   => 'directory',
       recurse  => true;
   }
 
 
-  # Obviously I abused fpm to create a logstash package and put it on my repository 
+  # Obviously I abused fpm to create a logstash package and put it on my
+  # repository
   package {
-    "logstash":
-      ensure => "latest";
+    'logstash':
+      ensure => 'latest';
   }
 }
 
@@ -39,6 +40,7 @@ class logstash::shipper (
   $logstash_server ='localhost',
   $verbose = 'no',
   $jarname ='logstash-1.1.0-monolithic.jar',
+  # TODO This needs refactoring :)
   $logfiles = '"/var/log/messages", "/var/log/syslog", "/var/log/*.log"'
 )
 {
@@ -47,9 +49,9 @@ class logstash::shipper (
     '/etc/logstash/shipper.conf':
       ensure  => 'file',
       group   => '0',
-      mode    => '644',
+      mode    => '0644',
       owner   => '0',
-      content => template("logstash/shipper.conf.erb"),
+      content => template('logstash/shipper.conf.erb'),
   }
 
 
@@ -57,7 +59,7 @@ class logstash::shipper (
     '/etc/rc.d/init.d/logstash-shipper':
       ensure => 'file',
       group  => '0',
-      mode   => '755',
+      mode   => '0755',
       owner  => '0',
       source => 'puppet:///modules/logstash/logstash-shipper' ;
   }
@@ -69,9 +71,9 @@ class logstash::shipper (
     '/usr/local/logstash/conf/shipper-wrapper.conf':
       ensure   => 'file',
       group    => '0',
-      mode     => '644',
+      mode     => '0644',
       owner    => '0',
-      content => template("logstash/shipper-wrapper.conf.erb");
+      content  => template('logstash/shipper-wrapper.conf.erb');
   }
 
   service { 'logstash-shipper':
@@ -85,7 +87,7 @@ class logstash::shipper (
   file { '/etc/logrotate.d/syslog':
     ensure   => 'file',
     group    => '0',
-    mode     => '644',
+    mode     => '0644',
     owner    => '0',
     source   => 'puppet:///modules/logstash/syslog.logrotate';
   }
@@ -105,16 +107,16 @@ class logstash::server(
     '/etc/logstash/indexer.conf':
       ensure  => 'file',
       group   => '0',
-      mode    => '644',
+      mode    => '0644',
       owner   => '0',
-      source  => "puppet:///modules/logstash/indexer.conf";
+      source  => 'puppet:///modules/logstash/indexer.conf';
   }
 
   file {
     '/etc/rc.d/init.d/logstash-server':
       ensure => 'file',
       group  => '0',
-      mode   => '755',
+      mode   => '0755',
       owner  => '0',
       source => 'puppet:///modules/logstash/logstash-server' ;
   }
@@ -126,9 +128,9 @@ class logstash::server(
     '/usr/local/logstash/conf/server-wrapper.conf':
       ensure   => 'file',
       group    => '0',
-      mode     => '644',
+      mode     => '0644',
       owner    => '0',
-      content => template("logstash/server-wrapper.conf.erb");
+      content  => template('logstash/server-wrapper.conf.erb');
   }
 
   service { 'logstash-server':
@@ -148,7 +150,7 @@ class logstash::web ($jarname ='logstash-1.1.0-monolithic.jar') {
     '/etc/rc.d/init.d/logstash-web':
       ensure => 'file',
       group  => '0',
-      mode   => '755',
+      mode   => '0755',
       owner  => '0',
       source => 'puppet:///modules/logstash/logstash-web' ;
   }
@@ -160,9 +162,9 @@ class logstash::web ($jarname ='logstash-1.1.0-monolithic.jar') {
     '/usr/local/logstash/conf/web-wrapper.conf':
       ensure   => 'file',
       group    => '0',
-      mode     => '644',
+      mode     => '0644',
       owner    => '0',
-      content => template("logstash/web-wrapper.conf.erb");
+      content  => template('logstash/web-wrapper.conf.erb');
   }
 
 
