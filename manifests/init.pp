@@ -1,33 +1,3 @@
-
-class logstash::common {
-
-  file {
-    '/usr/local/logstash/':
-      ensure   => 'directory';
-    '/etc/logstash/':
-      ensure   => 'directory';
-    '/usr/local/logstash/bin/':
-      ensure   => 'directory';
-    '/usr/local/logstash/lib/':
-      ensure   => 'directory';
-    '/usr/local/logstash/conf':
-      ensure   => 'directory';
-    '/usr/local/logstash/logs':
-      ensure   => 'directory';
-    '/var/log/logstash/':
-      ensure   => 'directory',
-      recurse  => true;
-  }
-
-
-  # Obviously I abused fpm to create a logstash package and put it on my
-  # repository
-  package {
-    'logstash':
-      ensure => 'latest';
-  }
-}
-
 class logstash {
   include logstash::common
 }
