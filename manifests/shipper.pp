@@ -52,13 +52,13 @@ class logstash::shipper (
     content  => template('logstash/shipper-wrapper.conf.erb');
   }
 
-  file { '/etc/logrotate.d/syslog':
-    ensure   => 'file',
-    group    => '0',
-    mode     => '0644',
-    owner    => '0',
-    source   => 'puppet:///modules/logstash/syslog.logrotate';
-  }
+  #  file { '/etc/logrotate.d/syslog':
+  #  ensure   => 'file',
+  #  group    => '0',
+  #  mode     => '0644',
+  #  owner    => '0',
+  #  source   => 'puppet:///modules/logstash/syslog.logrotate';
+  #}
 
   service { 'logstash-shipper':
     ensure    => 'running',
