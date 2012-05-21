@@ -21,13 +21,17 @@ class logstash::common {
   # create parent directory and all folders beneath it.
   file { '/usr/local/logstash/':
     ensure   => 'directory',
-  } ->
-  file { [
-      '/usr/local/logstash/bin/',
-      '/usr/local/logstash/lib/',
-      '/usr/local/logstash/logs/',
-      '/usr/local/logstash/conf/',
-    ]:
+  }
+  file { '/usr/local/logstash/bin/':
+    ensure => 'directory',
+  }
+  file {'/usr/local/logstash/lib/':
+    ensure => 'directory',
+  }
+  file {     '/usr/local/logstash/logs/':
+    ensure => 'directory',
+  }
+  file {     '/usr/local/logstash/conf/':
     ensure => 'directory',
   }
 
