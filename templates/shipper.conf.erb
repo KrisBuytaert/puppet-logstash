@@ -18,7 +18,7 @@ filter {
 output {
   # Output events to stdout for debugging. Feel free to remove
   # this output if you don't need it.
-  stdout { }
+  #  stdout { }
   # Ship events to the amqp fanout queue named 'rawlogs"
   amqp {
     host          => "<%= logstash_server %>"
