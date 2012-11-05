@@ -1,4 +1,5 @@
 #! /bin/sh
+# This file comes as a file from the puppet logstash module 
 #
 # Copyright (c) 1999, 2006 Tanuki Software Inc.
 #

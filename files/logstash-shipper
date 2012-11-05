@@ -1,5 +1,7 @@
 #! /bin/sh
 #
+
+# This file comes from the puppet logstash module 
 # Copyright (c) 1999, 2006 Tanuki Software Inc.
 #
 # Java Service Wrapper sh script.  Suitable for starting and stopping
