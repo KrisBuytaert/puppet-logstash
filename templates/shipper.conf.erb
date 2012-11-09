@@ -10,6 +10,7 @@
 input {
   file {
     type => "syslog"
+    sincedb_path => "/"
     # Wildcards work here :)
     path => [ <%= logfiles %> ]
   }
