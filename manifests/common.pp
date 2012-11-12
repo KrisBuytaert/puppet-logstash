@@ -47,7 +47,7 @@ class logstash::common {
   # Obviously I abused fpm to create a logstash package and put it on my
   # repository
   package { 'logstash':
-    ensure => 'latest';
+    ensure => '1.1.4-1';
   }
 
 }
