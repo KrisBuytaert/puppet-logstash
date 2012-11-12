@@ -21,7 +21,7 @@
 # * Update documentation
 #
 class logstash::web (
-  $jarname ='logstash-1.1.0-monolithic.jar'
+  $jarname ='logstash-1.1.4-monolithic.jar'
 ) {
 
   file { '/etc/rc.d/init.d/logstash-web':

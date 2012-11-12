@@ -22,7 +22,7 @@
 #
 class logstash::server (
   $verbose = 'no',
-  $jarname ='logstash-1.1.0-monolithic.jar'
+  $jarname ='logstash-1.1.4-monolithic.jar'
 ) {
 
   file { '/etc/logstash/indexer.conf':
