@@ -1,0 +1,40 @@
+
+OK Cleanup files / templates
+
+OK Step Version
+OK Package new version
+
+Split services to 
+  common: 
+  shipper: 
+  indexer:
+  web: 
+
+PCS Pattern  for those 3 
+
+
+
+Use concat module to actually build config files based on the needs
+
+Enable rsyslog
+Enable amqp
+Enable statsd
+Enable graphite 
+Enable elasticsearch
+
+
+Figure out grok configuration 
+
+
+
+
+
+OK Review simonmcc patches
+   Not pulling them in because it breaks a lot of assumptions
+
+    - not using tanukiwrapper as service manager
+    - managing and installing redis within the logstash module 
+    - installing logstash itselve from file download rather than a Package
+    - creating users inside a module (this wil for sure break with other users) 
+    - using template append which is obsolete rather than concat.
+
