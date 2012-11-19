@@ -1,14 +1,26 @@
 
+### File managed with puppet ###
+##<% if ! (defined?(servername)).nil? -%>
+    #    ## Served by:        '<%= servername %>'
+    #        #<% end -%>
+#        ## Module:           '<%= scope.to_hash['module_name'] %>'
+#        ## Template source:  '<%= template_source %>'
+#
+#
 # This static file comes from the puppet logstash module
 
 # mind that we're now using our own up patterns_dir which is managed by puppet
 input {
+# ship logs to the 'rawlogs' fanout queue.
   amqp {
-    # ship logs to the 'rawlogs' fanout queue.
-    type	=> "all"
-    host	=> "127.0.0.1"
-    exchange	=> "rawlogs"
-    name	=> "rawlogs_consumer"
+  type	=> "all"
+  host	=> "127.0.0.1"
+  exchange	=> "rawlogs"
+  name	=> "rawlogs_consumer"
+  }
+  syslog {
+  type => syslog
+  port => 5544
   }
 }
 

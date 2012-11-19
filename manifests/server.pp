@@ -30,7 +30,7 @@ class logstash::server (
     group   => '0',
     mode    => '0644',
     owner   => '0',
-    source  => 'puppet:///modules/logstash/indexer.conf';
+    content => template('logstash/indexer.conf.erb');
   }
 
   file { '/etc/rc.d/init.d/logstash-server':
