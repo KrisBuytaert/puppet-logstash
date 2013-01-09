@@ -34,20 +34,20 @@ filter {
  #    break_on_match	=> true
  #    named_captures_only => true
  # } 
-#  grok {
+  grok {
 #    patterns_dir	=> [ "/etc/logstash/grok_patterns" ]
-#    type		=> "syslog"
-#    pattern		=> "%{SYSLOGLINE}"
-#    break_on_match	=> true
-#    named_captures_only => true
-#  }
-#  grok {
+    type		=> "syslog"
+    pattern		=> "%{SYSLOGLINE}"
+    break_on_match	=> true
+    named_captures_only => true
+  }
+  grok {
 #    patterns_dir	=> [ "/etc/logstash/grok_patterns" ]
-#    type		=> "apache-access"
-#    pattern		=> "%{COMBINEDAPACHELOG}"
-#    break_on_match	=> true
-#    named_captures_only => true
-#  }
+    type		=> "apache-access"
+    pattern		=> "%{COMBINEDAPACHELOG}"
+    break_on_match	=> true
+    named_captures_only => true
+  }
   date {
     type => "syslog"
     # The 'timestamp' and 'timestamp8601' names are for fields in the
