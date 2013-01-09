@@ -74,4 +74,10 @@ output {
   elasticsearch {
     host => "127.0.0.1"
   }
+  statsd {
+  # Count one hit every event by response
+    host => 'graphite.internal.inuits.eu'
+    increment => ["apache.response.%{response}"]
+    count => [ "apache.bytes", "%{bytes}" ]
+  }
 }
