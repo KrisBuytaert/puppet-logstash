@@ -38,15 +38,15 @@ filter {
 #    patterns_dir	=> [ "/etc/logstash/grok_patterns" ]
     type		=> "syslog"
     pattern		=> "%{SYSLOGLINE}"
-    break_on_match	=> true
-    named_captures_only => true
+#    break_on_match	=> true
+#    named_captures_only => true
   }
   grok {
 #    patterns_dir	=> [ "/etc/logstash/grok_patterns" ]
     type		=> "apache-access"
     pattern		=> "%{COMBINEDAPACHELOG}"
-    break_on_match	=> true
-    named_captures_only => true
+#    break_on_match	=> true
+#    named_captures_only => true
   }
   date {
     type => "syslog"
@@ -77,7 +77,7 @@ output {
   statsd {
   # Count one hit every event by response
     host => 'graphite.internal.inuits.eu'
-    increment => ["apache.response.%{response}"]
+    increment => "apache.response.%{response}"
     count => [ "apache.bytes", "%{bytes}" ]
   }
 }
