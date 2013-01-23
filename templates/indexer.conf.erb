@@ -32,6 +32,7 @@ filter {
  grok {
         type => "syslog"
         pattern => [ "<%%{POSINT:syslog_pri}>%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{PROG:syslog_program} %{COMBINEDAPACHELOG}" ]
+        add_tag =>  'apache-log'
 
     }
 }
@@ -51,5 +52,6 @@ output {
     host => 'graphite.internal.inuits.eu'
     increment => "apache.%{syslog_program}.response.%{response}"
     count => [ "apache.%{syslog_program}.bytes", "%{bytes}" ]
+    tags => 'apache'
   }
 }
