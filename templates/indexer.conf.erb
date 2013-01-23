@@ -52,6 +52,6 @@ output {
     host => 'graphite.internal.inuits.eu'
     increment => "apache.%{syslog_program}.response.%{response}"
     count => [ "apache.%{syslog_program}.bytes", "%{bytes}" ]
-    tags => 'apache'
+    tags => 'apache-log'
   }
 }
