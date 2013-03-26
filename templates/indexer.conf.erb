@@ -1,17 +1,14 @@
-
 ### File managed with puppet ###
-##<% if ! (defined?(servername)).nil? -%>
-    #    ## Served by:        '<%= servername %>'
-    #        #<% end -%>
-#        ## Module:           '<%= scope.to_hash['module_name'] %>'
-#        ## Template source:  '<%= template_source %>'
+#<% if ! (defined?(servername)).nil? -%>
+    ## Served by:        '<%= servername %>'
+#<% end -%>
+## Module:           '<%= scope.to_hash['module_name'] %>'
+## Template source:  '<%= template_source %>'
 #
-#
-# This static file comes from the puppet logstash module
 
-# mind that we're now using our own up patterns_dir which is managed by puppet
+
 input {
-# ship logs to the 'rawlogs' fanout queue.
+  # ship logs to the 'rawlogs' fanout queue.
   amqp {
   type	=> "all"
   host	=> "127.0.0.1"
@@ -24,44 +21,20 @@ input {
   }
 }
 
+
+
+
 filter {
- #  grok {
- #    patterns_dir	=> [ "/etc/logstash/grok_patterns" ]
- #    match 		=> [ "wtf" ]
- #    type		=> "syslog"
- #    add_tag		=> 'wtf'
- #    add_field		=> [ "wtf", "%{@message}" ]
- #    break_on_match	=> true
- #    named_captures_only => true
- # } 
-#  grok {
-#    patterns_dir	=> [ "/etc/logstash/grok_patterns" ]
-#    type		=> "syslog"
-#    pattern		=> "%{SYSLOGLINE}"
-#    break_on_match	=> true
-#    named_captures_only => true
+# grep {
+#    match => ['@message','access']
+#    add_tag =>  'apache'
 #  }
-#  grok {
-#    patterns_dir	=> [ "/etc/logstash/grok_patterns" ]
-#    type		=> "apache-access"
-#    pattern		=> "%{COMBINEDAPACHELOG}"
-#    break_on_match	=> true
-#    named_captures_only => true
-#  }
-  date {
-    type => "syslog"
-    # The 'timestamp' and 'timestamp8601' names are for fields in the
-    # logstash event.  The 'SYSLOGLINE' grok pattern above includes a field
-    # named 'timestamp' that is set to the normal syslog timestamp if it
-    # exists in the event.
-    timestamp		=> "MMM  d HH:mm:ss"   # syslog 'day' value can be space-leading
-    timestamp		=> "MMM dd HH:mm:ss"
-    timestamp8601	=> ISO8601 # Some syslogs use ISO8601 time format
-  }
-  date {
-    type	=> "apache-access"
-    timestamp	=> "dd/MMM/yyyy:HH:mm:ss Z"
-  }
+ grok {
+        type => "syslog"
+        pattern => [ "<%%{POSINT:syslog_pri}>%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{PROG:syslog_program} %{COMBINEDAPACHELOG}" ]
+        add_tag =>  'apache-log'
+
+    }
 }
 
 output {
@@ -73,5 +46,12 @@ output {
   # If you can't discover using multicast, set the address explicitly
   elasticsearch {
     host => "127.0.0.1"
+  }
+  statsd {
+  # Count one hit every event by response
+    host => 'graphite.internal.inuits.eu'
+    increment => "apache.%{syslog_program}.response.%{response}"
+    count => [ "apache.%{syslog_program}.bytes", "%{bytes}" ]
+    tags => 'apache-log'
   }
 }
