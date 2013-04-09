@@ -1,5 +1,5 @@
 name    'puppet-logstash'
-version '0.98.14'
+version '0.98.15'
 source 'Github'
 author 'Kris Buytaert'
 license 'GPL'
