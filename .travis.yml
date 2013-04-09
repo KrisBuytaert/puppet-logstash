@@ -1,0 +1,10 @@
+---
+language: ruby
+script:
+- git clone -q git://github.com/puppetlabs/ghpublisher.git .forge-releng
+- .forge-releng/publish
+env:
+ global:
+ - PUBLISHER_LOGIN=github@krisbuytaert.be
+ - secure: "SUMXq3Vy16gQhLjodTDb8vMudJgQNGMSZvmE6cGBEYu1hsnT0RDbxQ9OGWbm\nxjILSeyGZARUZrRj2mYGCDiAn3kpLSTcihz7t6kZv4ESEDdFyoiV7u0teUKK\nxtylDU40Pk6ZHFX4A8ARpztMwqv45hekDnw7UaKm4Aw0u2W2I10="
+
